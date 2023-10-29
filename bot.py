@@ -21,10 +21,17 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if bot.user in message.mentions and message.author != bot.user:
-        async with message.channel.typing():
-            response = await gpt.reply(message.content)
-            await message.reply(response)
+    if message.author != bot.user:
+        keyword = gpt.containsKeyword(message.content)
+        if bot.user in message.mentions:
+            async with message.channel.typing():
+                response = await gpt.reply(message.content)
+                await message.reply(response)
+        elif keyword is not None:
+            async with message.channel.typing():
+                context = f"\nThe user is not talking to you, but you are chiming in on the mention of {keyword}."
+                response = await gpt.reply(message.content, context)
+                await message.reply(response)
     await bot.process_commands(message)
     
 bot.run(getenv('DISCORD_APP_TOKEN'))
