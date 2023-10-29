@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: gpt.py
+  checksum: b084aeb8e706e7667e947c1a769dc3ec32555355bb221d170d999a4f1baa5a1d
+version: "1.0"
